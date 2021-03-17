@@ -1,5 +1,11 @@
 export const Buttons = [
     [
+        {name: "/"},
+        {name: "x"},
+        {name: "-"},
+        {name: "+"},
+    ],
+    [
         {name: 1},
         {name: 2},
         {name: 3},
