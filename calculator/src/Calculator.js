@@ -1,5 +1,6 @@
 import React from 'react';
 import Screen from './Screen/Screen';
+import Keypad from './Keypad/Keypad';
 
 class Calculator extends React.Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class Calculator extends React.Component {
         return(
             <main className="calculator-area">
                 <Screen />
+                <Keypad />
             </main>
         );
     }
