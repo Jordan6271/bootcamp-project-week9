@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Buttons} from './Buttons.js'
+import {Buttons} from './Buttons/CalcButton.js'
 import Calculator from './Calculator.js'
 
 
