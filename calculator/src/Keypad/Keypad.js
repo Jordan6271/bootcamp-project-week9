@@ -12,37 +12,37 @@ class Keypad extends React.Component {
         return(
             <section className = "keypad">
                 <KeypadRow>
-                    <CalcButton>C</CalcButton>
-                    <CalcButton>←</CalcButton>
-                    <CalcButton>%</CalcButton>
-                    <CalcButton>/</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>C</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>←</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>%</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>/</CalcButton>
                 </KeypadRow>
                 
                 <KeypadRow>
-                    <CalcButton>9</CalcButton>
-                    <CalcButton>8</CalcButton>
-                    <CalcButton>7</CalcButton>
-                    <CalcButton>*</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>9</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>8</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>7</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>*</CalcButton>
                 </KeypadRow>
 
                 <KeypadRow>
-                    <CalcButton>6</CalcButton>
-                    <CalcButton>5</CalcButton>
-                    <CalcButton>4</CalcButton>
-                    <CalcButton>-</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>6</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>5</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>4</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>-</CalcButton>
                 </KeypadRow>
 
                 <KeypadRow>
-                    <CalcButton>3</CalcButton>
-                    <CalcButton>2</CalcButton>
-                    <CalcButton>1</CalcButton>
-                    <CalcButton>+</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>3</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>2</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>1</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>+</CalcButton>
                 </KeypadRow>
 
                 <KeypadRow>
-                    <CalcButton>0</CalcButton>
-                    <CalcButton>.</CalcButton>
-                    <CalcButtonLarge>=</CalcButtonLarge>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>0</CalcButton>
+                    <CalcButton onButtonPress = {this.props.onButtonPress}>.</CalcButton>
+                    <CalcButtonLarge onButtonPress = {this.props.onButtonPress}>=</CalcButtonLarge>
                 </KeypadRow>
             </section>
         );

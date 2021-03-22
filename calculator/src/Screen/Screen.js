@@ -10,8 +10,12 @@ class Screen extends React.Component {
     render() {
         return(
             <section className = "screen-area">
-                <Output />
-                <Computation />
+                <Output>
+                    {this.props.output}
+                </Output>
+                <Computation>
+                    {this.props.computation}
+                </Computation>
             </section>
         );
     }
