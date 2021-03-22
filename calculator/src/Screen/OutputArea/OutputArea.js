@@ -8,7 +8,7 @@ class Output extends React.Component {
     render() {
         return(
             <div className = "output-area">
-                1234
+                {this.props.children}
             </div>
         );
     }

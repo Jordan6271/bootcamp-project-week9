@@ -8,7 +8,7 @@ class Computation extends React.Component {
     render() {
         return(
             <div className = "computation-area">
-                1000 + 100 + 10 + 4
+                {this.props.children}
             </div>
         );
     }

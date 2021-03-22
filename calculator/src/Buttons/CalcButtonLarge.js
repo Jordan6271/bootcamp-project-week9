@@ -8,7 +8,7 @@ class LargeButtons extends React.Component {
 
     render() {
         return(
-           <Buttons type = 'large'>
+           <Buttons type = 'large' onClick = {this.props.onButtonPress}>
                {this.props.children}
            </Buttons>
         );
