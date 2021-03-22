@@ -18,7 +18,10 @@ class App extends React.Component {
         <div className = "calculator">
           <Calculator />
         </div>
-        {Buttons.map((values, i) => {
+
+
+
+        {/* {Buttons.map((values, i) => {
             return (
               <div key={i}>
                 {values.map((val) => {
@@ -30,7 +33,7 @@ class App extends React.Component {
                 })}
               </div>
             );
-          })}
+          })} */}
       </div>
     );
   }
