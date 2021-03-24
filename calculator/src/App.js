@@ -1,20 +1,13 @@
 import React from 'react';
 import './App.css';
-import {Buttons} from './Buttons/CalcButton.js'
 import Calculator from './Calculator.js'
 
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      output:[]
-    }
-  }
 
   render() {
     return (
-      <div>
+      <div className = "app">
         <div className = "calculator">
           <Calculator />
         </div>
