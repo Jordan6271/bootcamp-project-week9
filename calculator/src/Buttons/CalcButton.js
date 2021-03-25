@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Buttons = (props) => {
+function Buttons (props) {
     const classes = ['btn'];
 
     if (typeof props !== 'undefined' && typeof props.type !== 'undefined')
