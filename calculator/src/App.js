@@ -1,42 +1,30 @@
 import React from 'react';
 import './App.css';
-import {Buttons} from './Buttons/CalcButton.js'
 import Calculator from './Calculator.js'
 
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      output:[]
-    }
-  }
-
-  render() {
+function App () {
     return (
-      <div>
+        <div className = "app">
         <div className = "calculator">
-          <Calculator />
+            <Calculator />
         </div>
-
-
 
         {/* {Buttons.map((values, i) => {
             return (
-              <div key={i}>
+                <div key={i}>
                 {values.map((val) => {
-                  return (
+                    return (
                     <button key={val.name} value={val.name}>
-                      {val.name}
+                        {val.name}
                     </button>
-                  );
+                    );
                 })}
-              </div>
+                </div>
             );
-          })} */}
-      </div>
+            })} */}
+        </div>
     );
-  }
 }
 
 export default App;

@@ -1,17 +1,16 @@
 import React from 'react';
 
-class Buttons extends React.Component {
-    constructor(props) {
-        super(props)
-    }
+function Buttons (props) {
+    const classes = ['btn'];
 
-    render() {
-        return(
-           <button className = 'btn' onClick = {this.props.onButtonPress}>
-               {this.props.children}
-           </button>
-        );
-    }
+    if (typeof props !== 'undefined' && typeof props.type !== 'undefined')
+        classes.push('btn--' + props.type);
+
+    return (
+        <button className={classes.join(' ')} onClick={props.onButtonPress}>
+            {props.children}
+        </button>
+    );
 }
 
 export default Buttons

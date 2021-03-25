@@ -2,23 +2,17 @@ import React from 'react';
 import Output from './OutputArea/OutputArea';
 import Computation from './ComputationArea/ComputationArea';
 
-class Screen extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-        return(
-            <section className = "screen-area">
-                <Output>
-                    {this.props.output}
-                </Output>
-                <Computation>
-                    {this.props.computation}
-                </Computation>
-            </section>
-        );
-    }
+function Screen (props) {
+    return (
+        <section className = "screen-area">
+            <Output>
+                {props.output}
+            </Output>
+            <Computation>
+                {props.computation}
+            </Computation>
+        </section>
+    );
 }
 
 export default Screen;
