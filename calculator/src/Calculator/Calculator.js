@@ -54,11 +54,15 @@ function Calculator() {
     }
   }
 
-  const clear = () => {
+  const clear = (value) => {
+    if (value && operation === `=`) {
+      changeOutput(value);
+    } else {
       changeOutput(``);
-      changeInput(``);
-      changeOperation(``);
-      changeCalculation(0);
+    }
+    changeInput(``);
+    changeOperation(``);
+    changeCalculation(0);
   }
 
   const calculateSum = () => {
@@ -115,17 +119,18 @@ function Calculator() {
 
   const numberHandler = (value) => {
     if (operation === `=`) {
-      changeOutput(value);
-      changeOperation(``);
-    }
-    if (value === `.`) {
-      changeOutput(output + `.`);
+      clear(value);
     } else {
-      changeOutput((output + value));
+      if (value === `.`) {
+        changeOutput(output + `.`);
+      } else {
+        changeOutput((output + value));
+      }
     }
   }
 
   const buttonPressed = (currentValue) => {
+    console.log(operation);
     const value = currentValue.target.value; 
     if (value.match(/^(\d|\.)$/)) {
       numberHandler(value);
@@ -135,8 +140,8 @@ function Calculator() {
   }
 
   return (  
-    <Card className="calculator-area mx-auto pt-3 mt-5">
-      <Card.Header>
+    <Card className="calculator-area mx-auto pt-3 mt-4">
+      <Card.Header className="card-header">
         <div className="screen-area p-1">
           <div className="output-area h3">
             {output||0}
@@ -146,7 +151,7 @@ function Calculator() {
           </div>
         </div>
       </Card.Header>
-      <Card.Body className="pt-2">
+      <Card.Body className="card-body pt-2">
         <div className="keypad-area">
           {keypad.map((values, i) => {
             return (
