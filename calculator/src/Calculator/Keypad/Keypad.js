@@ -2,7 +2,7 @@ const Keypad = [
     [
         {name: `C`},
         {name: `←`},
-        {name: `±`},
+        {name: `%`},
         {name: `/`},
     ],
     [
@@ -26,7 +26,7 @@ const Keypad = [
     [
         {name: `.`},
         {name: `0`},
-        {},
+        {name: `±`},
         {name: `=`},
     ]
 ]

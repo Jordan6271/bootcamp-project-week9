@@ -10,30 +10,29 @@ function Calculator() {
   const[calculation, changeCalculation] = useState(0);
 
   const equals = () => {
-    changeInput(`${input} ${output} `);
-    if (output !== ``) {
-      const sum = calculateSum(calculation, parseFloat(output), operation)
-      changeOutput(sum);
-      changeCalculation(sum);
-    } else {
-      changeOutput(calculation);
+    if (operation !== `=`) {
+      changeInput(`${input} ${output} `);
+      if (output !== ``) {
+        if (output === `0` && operation === `/`) {
+          alert(`You cannot divide by 0.`);
+          changeInput(input.slice(0, -3))
+        } else {
+          const sum = calculateSum();
+          changeOutput(sum.toString());
+          changeInput(sum.toString());
+          changeCalculation(sum);
+        }
+      } else {
+        changeOutput(calculation);
+        changeInput(`${output}`);
+      }
+      changeOperation(`=`);
     }
-    if (input.substring(input.length - 2) === operation) {
-      console.log(`Input has an operation at the end`)
-    } else {
-      console.log(`Input does not have an operation at the end`)
-    }
-    changeOperation(``);
-    // changeCalculation(0);
   }
 
   const signSwap = () => {
-    if (parseFloat(output) > 0) {
-      const swapNeg = output * -1;
-      changeOutput(swapNeg.toString());
-    } else if (parseFloat(output) < 0) {
-      const swapPos = Math.abs(output);
-      changeOutput(swapPos.toString());
+    if (output !== 0) {
+      changeOutput(output * -1);
     }
   }
 
@@ -50,18 +49,20 @@ function Calculator() {
       changeCalculation(0);
   }
 
-  const calculateSum = (calculation, output, operation) => {
+  const calculateSum = () => {
     if (calculation === 0) {
-      return (output);
+      return (parseFloat(output));
     } else {
       if (operation === `+`) {
-        return (calculation + output);
+        return (calculation + parseFloat(output));
       } else if (operation === `-`) {
-        return (calculation - output);
+        return (calculation - parseFloat(output));
       } else if (operation === `*`) {
-        return (calculation * output);
+        return (calculation * parseFloat(output));
       } else if (operation === `/`) {
-        return (calculation / output);
+        return (calculation / parseFloat(output));
+      } else if (operation === `=`) {
+        return (calculation);
       }
     }
   }
@@ -70,10 +71,12 @@ function Calculator() {
     if (output === ``) {
       changeOperation(currentOperation);
     } else {
-      changeCalculation(calculateSum(calculation, parseFloat(output), operation));
+      changeCalculation(calculateSum());
       changeOutput(``);
       changeOperation(currentOperation);
-      if (input === ``) {
+      if (output === `0` && operation === `=`) {
+        changeInput(`${input} ${currentOperation}`);
+      } else if (input === `` || operation === `=`) {
         changeInput(`${output} ${currentOperation} `);
       } else {
         changeInput(`${input} ${output} ${currentOperation} `);
@@ -98,15 +101,14 @@ function Calculator() {
   }
 
   const numberHandler = (value) => {
-    const number = value;
     if (operation === `=`) {
-      changeOutput(number);
+      changeOutput(value);
       changeOperation(``);
     }
     if (value === `.`) {
       changeOutput(output + `.`);
     } else {
-      changeOutput((output + number));
+      changeOutput((output + value));
     }
   }
 
@@ -132,10 +134,10 @@ function Calculator() {
       <div className="keypad-area">
         {keypad.map((values, i) => {
           return (
-            <div className="keypad">
+            <div className="keypad" key={i}>
               {values.map((val) => {
                 return (
-                  <button onClick={(currentValue) => buttonPressed(currentValue)} value={val.name}>
+                  <button onClick={(currentValue) => buttonPressed(currentValue)} value={val.name} key={val.name}>
                     {val.name}
                   </button>
                 );
