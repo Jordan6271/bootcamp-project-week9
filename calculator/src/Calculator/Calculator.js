@@ -31,7 +31,7 @@ function Calculator() {
   }
 
   const signSwap = () => {
-    if (output !== 0) {
+    if (output != 0) {
       changeOutput(output * -1);
     }
   }
@@ -61,6 +61,8 @@ function Calculator() {
         return (calculation * parseFloat(output));
       } else if (operation === `/`) {
         return (calculation / parseFloat(output));
+      } else if (operation === `%`) {
+        return (calculation / 100 * parseFloat(output));
       } else if (operation === `=`) {
         return (calculation);
       }
@@ -85,7 +87,7 @@ function Calculator() {
   }
 
   const operationHandler = (value) => {
-    if (value === `+` || value === `-` || value === `*` || value === `/`) {
+    if (value === `+` || value === `-` || value === `*` || value === `/` || value === `%`) {
       basicOperation(value);
     } else if (value === `C`) {
       clear();
@@ -146,8 +148,6 @@ function Calculator() {
           );
         })}
       </div>
-      <br />
-      Calculation: {calculation}
     </main>
   );
 }
