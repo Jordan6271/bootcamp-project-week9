@@ -1,78 +1,96 @@
 import React, {useState} from 'react';
 import Keypad from './Keypad/Keypad';
-import History from './History/History';
 
 const keypad = Keypad || [];
 
 function Calculator() {
-  const[output, changeOutput] = useState("");
+  const[output, changeOutput] = useState(``);
+  const[input, changeInput] = useState(``);
+  const[operation, changeOperation] = useState(``);
   const[calculation, changeCalculation] = useState(0);
-  const[operation, changeOperation] = useState("");
-  const[history, changeHistory] = useState("");
 
-  const equals= () => {
-    if (output === "") {
-      changeOutput(calculation);
-      changeOperation("=");
+  const equals = () => {
+    changeInput(`${input} ${output} `);
+    if (output !== ``) {
+      const sum = calculateSum(calculation, parseFloat(output), operation)
+      changeOutput(sum);
+      changeCalculation(sum);
     } else {
-      const newOutput = newCalculation(operation, calculation, output)
-      changeOutput(newOutput);
-      changeCalculation(0);
-      changeOperation("=");
-      changeHistory(history + " " + parseFloat(output) + " = " + newOutput);
+      changeOutput(calculation);
+    }
+    if (input.substring(input.length - 2) === operation) {
+      console.log(`Input has an operation at the end`)
+    } else {
+      console.log(`Input does not have an operation at the end`)
+    }
+    changeOperation(``);
+    // changeCalculation(0);
+  }
+
+  const signSwap = () => {
+    if (parseFloat(output) > 0) {
+      const swapNeg = output * -1;
+      changeOutput(swapNeg.toString());
+    } else if (parseFloat(output) < 0) {
+      const swapPos = Math.abs(output);
+      changeOutput(swapPos.toString());
     }
   }
 
   const backspace = () => {
-    if (output !== "") {
-      changeOutput(output.substring(0, output.length - 1));
+    if (output !== ``) {
+      changeOutput(output.slice(0, -1));
     }
   }
 
   const clear = () => {
-      changeOutput("");
+      changeOutput(``);
+      changeInput(``);
+      changeOperation(``);
       changeCalculation(0);
-      changeOperation("");
-      changeHistory("");
-      console.log(`The output is ${output}! The calculation is ${calculation}! The operation is ${operation}! The history is ${history}!`)
   }
 
-  const newCalculation = (operation, currentCalculation, newNumber) => {
-    if (operation === "+") {
-      changeCalculation(parseFloat(currentCalculation + newNumber));
-    } else if (operation === "-") {
-      changeCalculation(parseFloat(currentCalculation - newNumber));
-    } else if (operation === "*") {
-      changeCalculation(parseFloat(currentCalculation * newNumber));
-    } else if (operation === "/") {
-      changeCalculation(parseFloat(currentCalculation / newNumber));
-    } else if (operation === "" || operation === "=") {
-      changeCalculation(newNumber);
+  const calculateSum = (calculation, output, operation) => {
+    if (calculation === 0) {
+      return (output);
+    } else {
+      if (operation === `+`) {
+        return (calculation + output);
+      } else if (operation === `-`) {
+        return (calculation - output);
+      } else if (operation === `*`) {
+        return (calculation * output);
+      } else if (operation === `/`) {
+        return (calculation / output);
+      }
     }
   }
 
   const basicOperation = (currentOperation) => {
-    if (output === "") {
+    if (output === ``) {
       changeOperation(currentOperation);
-      console.log(`The operation is ${operation}`)
     } else {
-      changeHistory(history + " " + output + " " + currentOperation)
-      console.log(`The current history is ${history}`)
-      newCalculation(operation, calculation, output);
+      changeCalculation(calculateSum(calculation, parseFloat(output), operation));
+      changeOutput(``);
       changeOperation(currentOperation);
-      changeOutput(0);
-      console.log(calculation)
+      if (input === ``) {
+        changeInput(`${output} ${currentOperation} `);
+      } else {
+        changeInput(`${input} ${output} ${currentOperation} `);
+      }
     }
   }
 
-  const operatorHandler = (value) => {
-    if (value === "+" || value === "-" || value === "*" || value === "/") {
+  const operationHandler = (value) => {
+    if (value === `+` || value === `-` || value === `*` || value === `/`) {
       basicOperation(value);
-    } else if (value === "C") {
+    } else if (value === `C`) {
       clear();
-    } else if (value === "←") {
+    } else if (value === `←`) {
       backspace();
-    } else if (value === "=") {
+    } else if (value === `±`) {
+      signSwap();
+    } else if (value === `=`) {
       equals();
     } else {
       alert(`The operation ${value} is not currently supported.`);
@@ -80,21 +98,17 @@ function Calculator() {
   }
 
   const numberHandler = (value) => {
-    const number = parseFloat(value);
-    console.log(`I pressed on the button that says ${number}`)
-    console.log(`The output before is ${parseFloat(output)}`)
-    if (operation === "=") {
-      changeOutput(number);  
-      changeOperation("");    
+    const number = value;
+    if (operation === `=`) {
+      changeOutput(number);
+      changeOperation(``);
     }
-    changeOutput(parseFloat(output + number));
-    if (value === ".") {
-      changeOutput(output + ".");
-      console.log(output);
+    if (value === `.`) {
+      changeOutput(output + `.`);
     } else {
-      changeOutput(output + number);
+      changeOutput((output + number));
     }
-    console.log(`The output after is ${output}`);
+    // changeInput(input + value);
   }
 
   const buttonPressed = (currentValue) => {
@@ -102,7 +116,7 @@ function Calculator() {
     if (value.match(/^(\d|\.)$/)) {
       numberHandler(value);
     } else {
-      operatorHandler(value, output);
+      operationHandler(value, output);
     }
   }
 
@@ -113,16 +127,16 @@ function Calculator() {
           Output: {output}
         </div>
         <div className="computation-screen">
-          {calculation}
+          {input}
         </div>
       </div>
       <div className="keypad-area">
         {keypad.map((values, i) => {
           return (
-            <div key={i}>
+            <div className="keypad">
               {values.map((val) => {
                 return (
-                  <button onClick={(currentValue) => buttonPressed(currentValue)} key={val.name} value={val.name}>
+                  <button onClick={(currentValue) => buttonPressed(currentValue)} value={val.name}>
                     {val.name}
                   </button>
                 );
@@ -131,9 +145,8 @@ function Calculator() {
           );
         })}
       </div>
-      <div className="history-area">
-        <History />
-      </div>
+      <br />
+      Calculation: {calculation}
     </main>
   );
 }
