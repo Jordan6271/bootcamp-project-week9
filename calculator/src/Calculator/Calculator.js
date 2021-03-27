@@ -45,12 +45,14 @@ function Calculator() {
   }
 
   const backspace = () => {
-    if (output !== ``) {
-      changeOperation(`←`);
-      changeOutput(output.slice(0, -1));
-    } else if (output === `` && operation === `←`) {
-      changeInput(input.slice(0, -3));
-      changeOperation(`!←`);
+    if (operation !== `=`) {
+      if (output !== ``) {
+        changeOperation(`←`);
+        changeOutput(output.slice(0, -1));
+      } else if (output === `` && operation === `←`) {
+        changeInput(input.slice(0, -3));
+        changeOperation(`!←`);
+      }
     }
   }
 
@@ -85,6 +87,11 @@ function Calculator() {
 
   const basicOperation = (currentOperation) => {
     if (output === `` && operation !== `=`) {
+      if (operation === `+` || operation === `-` || operation === `*` || operation === `/`) {
+        if (input !== ``) {
+          changeInput(`${input.slice(0, -3)} ${currentOperation} `);
+        }
+      }
       changeOperation(currentOperation);
     } else {
       const sum = calculateSum();
@@ -130,7 +137,6 @@ function Calculator() {
   }
 
   const buttonPressed = (currentValue) => {
-    console.log(operation);
     const value = currentValue.target.value; 
     if (value.match(/^(\d|\.)$/)) {
       numberHandler(value);
