@@ -86,20 +86,23 @@ function Calculator() {
   }
 
   const basicOperation = (currentOperation) => {
-    if (output === `` && operation !== `=`) {
+    if (output === `` && operation !== `=` && operation !== `!←`) {
       if (operation === `+` || operation === `-` || operation === `*` || operation === `/`) {
         if (input !== ``) {
           changeInput(`${input.slice(0, -3)} ${currentOperation} `);
         }
       }
       changeOperation(currentOperation);
+    } else if (operation === `!←`) {
+      changeOperation(currentOperation);
+      changeInput(`${input} ${currentOperation} `)
     } else {
       const sum = calculateSum();
       changeCalculation(sum);
       changeOutput(``);
       changeOperation(currentOperation);
-      if ((output === `` && operation === `=`) || (output === `` && operation === `!←`)) {
-        changeInput(`${input} ${currentOperation}`);
+      if (output === `` && operation === `=`) {
+        changeInput(`${input} ${currentOperation} `);
       } else if (input === `` || operation === `=`) {
         changeInput(`${output} ${currentOperation} `);
       } else {
