@@ -108,7 +108,6 @@ function Calculator() {
     } else {
       changeOutput((output + number));
     }
-    // changeInput(input + value);
   }
 
   const buttonPressed = (currentValue) => {
