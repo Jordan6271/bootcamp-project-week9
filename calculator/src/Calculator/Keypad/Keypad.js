@@ -1,33 +1,32 @@
 const Keypad = [
     [
-        {name: `C`},
-        {name: `←`},
-        {name: `%`},
-        {name: `/`},
+        {name: `C`, class: `btn-danger`},
+        {name: `←`, class: `btn-danger`},
+        {name: `±`, class: `btn-danger`},
+        {name: `/`, class: `btn-danger`},
     ],
     [
-        {name: `7`},
-        {name: `8`},
-        {name: `9`},
-        {name: `*`},
+        {name: `7`, class: `btn-danger`},
+        {name: `8`, class: `btn-danger`},
+        {name: `9`, class: `btn-danger`},
+        {name: `*`, class: `btn-danger`},
     ],
     [
-        {name: `4`},
-        {name: `5`},
-        {name: `6`},
-        {name: `+`},
+        {name: `4`, class: `btn-danger`},
+        {name: `5`, class: `btn-danger`},
+        {name: `6`, class: `btn-danger`},
+        {name: `+`, class: `btn-danger`},
     ],
     [
-        {name: `1`},
-        {name: `2`},
-        {name: `3`},
-        {name: `-`},
+        {name: `1`, class: `btn-danger`},
+        {name: `2`, class: `btn-danger`},
+        {name: `3`, class: `btn-danger`},
+        {name: `-`, class: `btn-danger`},
     ],
     [
-        {name: `.`},
-        {name: `0`},
-        {name: `±`},
-        {name: `=`},
+        {name: `.`, class: `btn-danger`},
+        {name: `0`, class: `btn-danger`},
+        {name: `=`, class: `btn-large btn-danger`},
     ]
 ]
 

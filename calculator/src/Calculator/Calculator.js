@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import Keypad from './Keypad/Keypad';
+import {Button, Card} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Calculator.css';
 
 const keypad = Keypad || [];
 
@@ -15,30 +18,39 @@ function Calculator() {
       if (output !== ``) {
         if (output === `0` && operation === `/`) {
           alert(`You cannot divide by 0.`);
-          changeInput(input.slice(0, -3))
+          changeInput(input.slice(0, -3));
+          changeOutput(``);
         } else {
           const sum = calculateSum();
-          changeOutput(sum.toString());
-          changeInput(sum.toString());
+          if ((sum + '.').split('.')[1].length > 3) { 
+            changeOutput(sum.toFixed(3).toString());
+          } else {
+            changeOutput(sum.toString());
+          }
+          changeInput(``);
           changeCalculation(sum);
         }
       } else {
-        changeOutput(calculation);
-        changeInput(`${output}`);
+        changeOutput(calculation.toString());
+        changeInput(``);
       }
       changeOperation(`=`);
     }
   }
 
   const signSwap = () => {
-    if (output != 0) {
-      changeOutput(output * -1);
+    if (output !== ``) {
+      changeOutput((output * -1).toString());
     }
   }
 
   const backspace = () => {
     if (output !== ``) {
+      changeOperation(`←`);
       changeOutput(output.slice(0, -1));
+    } else if (output === `` && operation === `←`) {
+      changeInput(input.slice(0, -3));
+      changeOperation(`!←`);
     }
   }
 
@@ -61,8 +73,6 @@ function Calculator() {
         return (calculation * parseFloat(output));
       } else if (operation === `/`) {
         return (calculation / parseFloat(output));
-      } else if (operation === `%`) {
-        return (calculation / 100 * parseFloat(output));
       } else if (operation === `=`) {
         return (calculation);
       }
@@ -70,13 +80,14 @@ function Calculator() {
   }
 
   const basicOperation = (currentOperation) => {
-    if (output === ``) {
+    if (output === `` && operation !== `=`) {
       changeOperation(currentOperation);
     } else {
-      changeCalculation(calculateSum());
+      const sum = calculateSum();
+      changeCalculation(sum);
       changeOutput(``);
       changeOperation(currentOperation);
-      if (output === `0` && operation === `=`) {
+      if ((output === `` && operation === `=`) || (output === `` && operation === `!←`)) {
         changeInput(`${input} ${currentOperation}`);
       } else if (input === `` || operation === `=`) {
         changeInput(`${output} ${currentOperation} `);
@@ -87,7 +98,7 @@ function Calculator() {
   }
 
   const operationHandler = (value) => {
-    if (value === `+` || value === `-` || value === `*` || value === `/` || value === `%`) {
+    if (value === `+` || value === `-` || value === `*` || value === `/`) {
       basicOperation(value);
     } else if (value === `C`) {
       clear();
@@ -124,31 +135,35 @@ function Calculator() {
   }
 
   return (  
-    <main className="calculator-area">
-      <div className = "screen-area">
-        <div className="output-area">
-          Output: {output}
+    <Card className="calculator-area mx-auto pt-3 mt-5">
+      <Card.Header>
+        <div className="screen-area p-1">
+          <div className="output-area h3">
+            {output||0}
+          </div>
+          <div className="computation-screen">
+            {input}
+          </div>
         </div>
-        <div className="computation-screen">
-          {input}
+      </Card.Header>
+      <Card.Body className="pt-2">
+        <div className="keypad-area">
+          {keypad.map((values, i) => {
+            return (
+              <div className="keypad" key={i}>
+                {values.map((val) => {
+                  return (
+                    <Button onClick={(currentValue) => buttonPressed(currentValue)}className={val.class} value={val.name} key={val.name}>
+                      {val.name}
+                    </Button>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
-      </div>
-      <div className="keypad-area">
-        {keypad.map((values, i) => {
-          return (
-            <div className="keypad" key={i}>
-              {values.map((val) => {
-                return (
-                  <button onClick={(currentValue) => buttonPressed(currentValue)} value={val.name} key={val.name}>
-                    {val.name}
-                  </button>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    </main>
+      </Card.Body>
+    </Card>
   );
 }
 
