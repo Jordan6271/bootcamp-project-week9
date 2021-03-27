@@ -1,29 +1,13 @@
 import React from 'react';
 import './App.css';
-import Calculator from './Calculator.js'
+import Calculator from './Calculator/Calculator.js'
 
 
-function App () {
+function App() {
     return (
-        <div className = "app">
-        <div className = "calculator">
-            <Calculator />
-        </div>
-
-        {/* {Buttons.map((values, i) => {
-            return (
-                <div key={i}>
-                {values.map((val) => {
-                    return (
-                    <button key={val.name} value={val.name}>
-                        {val.name}
-                    </button>
-                    );
-                })}
-                </div>
-            );
-            })} */}
-        </div>
+    <div className = "calculator">
+        <Calculator />
+    </div>
     );
 }
 
