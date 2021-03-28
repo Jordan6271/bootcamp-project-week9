@@ -45,13 +45,9 @@ function Calculator() {
   }
 
   const backspace = () => {
-    if (operation !== `=`) {
-      if (output !== ``) {
-        changeOperation(`←`);
-        changeOutput(output.slice(0, -1).toString());
-      } else {
-        changeOperation(``);
-      }
+    if (operation !== `=` && operation !== `←` && output !== ``) {
+      changeOperation(`←`);
+      changeOutput(output.slice(0, -1).toString());
     }
   }
 
