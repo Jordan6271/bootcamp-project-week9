@@ -144,6 +144,8 @@ function Calculator() {
         const newOperation = input.slice(-2, -1);
         if (newOperation === `+` || newOperation === `-` || newOperation === `*` || newOperation === `/`) {
           changeOperation(newOperation);
+        } else {
+          changeOperation(``);
         }
       }
       if (value === `.`) {
