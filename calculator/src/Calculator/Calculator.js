@@ -164,7 +164,7 @@ function Calculator() {
   }
 
   return (  
-    <Card className="calculator-area mx-auto pt-3 mt-4">
+    <Card className="calculator-area mx-auto pt-3 mt-5">
       <Card.Header className="card-header">
         <div className="screen-area p-1">
           <div className="output-area h3">
@@ -175,7 +175,7 @@ function Calculator() {
           </div>
         </div>
       </Card.Header>
-      <Card.Body className="card-body pt-2">
+      <Card.Body className="card-body pt-4">
         <div className="keypad-area">
           {keypad.map((values, i) => {
             return (

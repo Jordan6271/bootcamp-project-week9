@@ -4,7 +4,7 @@ body {
 
 .calculator-area {
     width: 300px;
-    height: 420px;
+    height: auto;
     background-color: #8A1111;
     text-align: center;
 }
@@ -14,14 +14,14 @@ body {
 }
 
 .screen-area {
-    height: 100px;
+    height: 150px;
     text-align: right;
     background-color: #A2A2A2;
     border-radius: 8px;
 }
 
 .btn {
-    width: 50px;
+    width: 60px;
     height: 50px;
     background-color: rgba(255,0,0,0.8);
     -webkit-border-radius: 0px;
@@ -31,6 +31,10 @@ body {
     border-radius: 0px;
     outline: 2px solid #A10000;
     box-shadow: none;
+}
+
+.btn-equals {
+    width: 120px;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, 
@@ -59,6 +63,19 @@ body {
     background-color: rgba(255,0,0,0.2);
 }
 
-.btn-equals {
-    width: 100px;
+@media only screen and (min-width: 769px) {
+    .calculator-area {
+        width: 500px;
+        height: 625px;
+    }
+    .screen-area {
+        height: 150px;
+    }
+    .btn {
+        width: 100px;
+        height: 75px;
+    }
+    .btn-equals {
+        width: 200px;
+    }
 }
