@@ -150,7 +150,9 @@ function Calculator() {
       }
       if (value === `.`) {
         if (output.match(/^[^.\r\n]+$/)) {
-          changeOutput(output + `.`);
+          changeOutput(`${output}.`);
+        } else if (output === ``) {
+          changeOutput(`0.`)
         }
       } else {
         changeOutput((output + value));
