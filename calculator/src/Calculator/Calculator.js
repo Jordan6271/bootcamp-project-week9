@@ -43,8 +43,14 @@ function Calculator() {
   }
 
   const signSwap = () => {
-    if (output !== ``) {
+    if (output !== `` && output !== `-`) {
       changeOutput((output * -1).toString());
+    } else {
+      if (output === ``) {
+        changeOutput(`-`)
+      } else {
+        changeOutput(``);
+      }
     }
   }
 
@@ -72,55 +78,61 @@ function Calculator() {
 
   const calculateSum = () => {
     const number = parseFloat(output);
-    if (operation === `+`) {
-      return (calculation + number);
-    } else if (operation === `-`) {
-      return (calculation - number);
-    } else if (operation === `*`) {
-      if (calculation === 0) {
-        return (0);
-      } else {
-        return (calculation * number);
-      }
-    } else if (operation === `/`) {
-      if (calculation === 0) {
-        return (0);
-      } else {
-        return (calculation / number);
-      }
-    } else if (operation === `←` || operation === `!←` ) {
-      if (input.slice(-2, -1) === `+`) {
+    if (calculation === 0) {
+      return (number);
+    } else {
+      if (operation === `+`) {
         return (calculation + number);
-      } else if (input.slice(-2, -1) === `-`) {
+      } else if (operation === `-`) {
         return (calculation - number);
-      } else if (input.slice(-2, -1) === `*`) {
-        return (calculation * number);
-      } else if (input.slice(-2, -1) === `/`) {
-        return (calculation / number);
+      } else if (operation === `*`) {
+        if (calculation === 0 && number === 0) {
+          return (0);
+        } else {
+          return (calculation * number);
+        }
+      } else if (operation === `/`) {
+        if (calculation === 0 && number === 0) {
+          return (0);
+        } else {
+          return (calculation / number);
+        }
+      } else if (operation === `←` || operation === `!←` ) {
+        if (input.slice(-2, -1) === `+`) {
+          return (calculation + number);
+        } else if (input.slice(-2, -1) === `-`) {
+          return (calculation - number);
+        } else if (input.slice(-2, -1) === `*`) {
+          return (calculation * number);
+        } else if (input.slice(-2, -1) === `/`) {
+          return (calculation / number);
+        }
+      } else if (operation === `=`) {
+        return (calculation);
       }
-    } else if (operation === `=`) {
-      return (calculation);
     }
   }
 
   const basicOperation = (currentOperation) => {
-    if (output === `` && operation !== `=`) {
+    if ((output === `` && operation !== `=`) 
+    || (output === `-` && operation !== `=`)) {
+      if (currentOperation === `-`) {
+        signSwap();
+        changeOperation(currentOperation);
+      } else if (currentOperation === `+` && output === `-`) {
+        changeOutput(``);
+      }
       if (operation === `+` || operation === `-` || operation === `*` || operation === `/` || operation === `←` || operation === `!←`) {
         if (input !== ``) {
           changeInput(`${input.slice(0, -3)} ${currentOperation} `);
         }
-      }
-      if (operation !== `←` || operation !== `!←`) {
-        changeOperation(currentOperation);
-      }
+        if (operation !== `←` || operation !== `!←`) {
+          changeOperation(currentOperation);
+        }
+      } 
     } else {
-      if (calculation === 0) {
-        changeOperation(currentOperation);
-        changeCalculation(calculation + 0);
-      } else {
-        const sum = calculateSum();
-        changeCalculation(sum);
-      }
+      const sum = calculateSum();
+      changeCalculation(sum);
       changeOutput(``);
       changeOperation(currentOperation);
       if (output === `` && operation === `=`) {
@@ -168,7 +180,7 @@ function Calculator() {
           changeOutput(`0.`)
         }
       } else {
-        changeOutput((output + value));
+        changeOutput(`${output}${value}`);
       }
     }
   }
@@ -178,7 +190,7 @@ function Calculator() {
     if (value.match(/^(\d|\.)$/)) {
       numberHandler(value);
     } else {
-      operationHandler(value, output);
+      operationHandler(value);
     }
   }
 
