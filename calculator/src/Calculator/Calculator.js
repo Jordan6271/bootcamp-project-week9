@@ -48,10 +48,9 @@ function Calculator() {
     if (operation !== `=`) {
       if (output !== ``) {
         changeOperation(`←`);
-        changeOutput(output.slice(0, -1));
-      } else if (output === `` && operation === `←`) {
-        changeInput(input.slice(0, -3));
-        changeOperation(`!←`);
+        changeOutput(output.slice(0, -1).toString());
+      } else {
+        changeOperation(``);
       }
     }
   }
@@ -68,17 +67,28 @@ function Calculator() {
   }
 
   const calculateSum = () => {
+    const number = parseFloat(output);
     if (calculation === 0) {
-      return (parseFloat(output));
+      return (number);
     } else {
       if (operation === `+`) {
-        return (calculation + parseFloat(output));
+        return (calculation + number);
       } else if (operation === `-`) {
-        return (calculation - parseFloat(output));
+        return (calculation - number);
       } else if (operation === `*`) {
-        return (calculation * parseFloat(output));
+        return (calculation * number);
       } else if (operation === `/`) {
-        return (calculation / parseFloat(output));
+        return (calculation / number);
+      } else if (operation === `←` ) {
+        if (input.slice(-2, -1) === `+`) {
+          return (calculation + number);
+        } else if (input.slice(-2, -1) === `-`) {
+          return (calculation - number);
+        } else if (input.slice(-2, -1) === `*`) {
+          return (calculation * number);
+        } else if (input.slice(-2, -1) === `/`) {
+          return (calculation / number);
+        }
       } else if (operation === `=`) {
         return (calculation);
       }
@@ -86,16 +96,15 @@ function Calculator() {
   }
 
   const basicOperation = (currentOperation) => {
-    if (output === `` && operation !== `=` && operation !== `!←`) {
-      if (operation === `+` || operation === `-` || operation === `*` || operation === `/`) {
+    if (output === `` && operation !== `=`) {
+      if (operation === `+` || operation === `-` || operation === `*` || operation === `/` || operation === `←`) {
         if (input !== ``) {
           changeInput(`${input.slice(0, -3)} ${currentOperation} `);
         }
       }
-      changeOperation(currentOperation);
-    } else if (operation === `!←`) {
-      changeOperation(currentOperation);
-      changeInput(`${input} ${currentOperation} `)
+      if (operation !== `←`) {
+        changeOperation(currentOperation);
+      }
     } else {
       const sum = calculateSum();
       changeCalculation(sum);
@@ -131,6 +140,12 @@ function Calculator() {
     if (operation === `=`) {
       clear(value);
     } else {
+      if (operation === `←`) {
+        const newOperation = input.slice(-2, -1);
+        if (newOperation === `+` || newOperation === `-` || newOperation === `*` || newOperation === `/`) {
+          changeOperation(newOperation);
+        }
+      }
       if (value === `.`) {
         changeOutput(output + `.`);
       } else {
