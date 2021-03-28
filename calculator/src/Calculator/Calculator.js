@@ -45,10 +45,14 @@ function Calculator() {
   }
 
   const backspace = () => {
-    if (operation !== `=` && operation !== `←` && output !== ``) {
-      changeOperation(`←`);
-      changeOutput(output.slice(0, -1).toString());
-    }
+    if (operation !== `=` && operation !== `!←`) {
+      if (output !== ``) {
+        changeOperation(`←`);
+        changeOutput(output.slice(0, -1).toString());
+      } else {
+        changeOperation(`!←`)
+      }
+    } 
   }
 
   const clear = (value) => {
@@ -75,7 +79,7 @@ function Calculator() {
         return (calculation * number);
       } else if (operation === `/`) {
         return (calculation / number);
-      } else if (operation === `←` ) {
+      } else if (operation === `←` || operation === `!←` ) {
         if (input.slice(-2, -1) === `+`) {
           return (calculation + number);
         } else if (input.slice(-2, -1) === `-`) {
@@ -93,12 +97,12 @@ function Calculator() {
 
   const basicOperation = (currentOperation) => {
     if (output === `` && operation !== `=`) {
-      if (operation === `+` || operation === `-` || operation === `*` || operation === `/` || operation === `←`) {
+      if (operation === `+` || operation === `-` || operation === `*` || operation === `/` || operation === `←` || operation === `!←`) {
         if (input !== ``) {
           changeInput(`${input.slice(0, -3)} ${currentOperation} `);
         }
       }
-      if (operation !== `←`) {
+      if (operation !== `←` || operation !== `!←`) {
         changeOperation(currentOperation);
       }
     } else {
@@ -121,7 +125,7 @@ function Calculator() {
       basicOperation(value);
     } else if (value === `C`) {
       clear();
-    } else if (value === `←`) {
+    } else if (value === `←` || value === `!←`) {
       backspace();
     } else if (value === `±`) {
       signSwap();
@@ -136,7 +140,7 @@ function Calculator() {
     if (operation === `=`) {
       clear(value);
     } else {
-      if (operation === `←`) {
+      if (operation === `←` || operation === `!←`) {
         const newOperation = input.slice(-2, -1);
         if (newOperation === `+` || newOperation === `-` || newOperation === `*` || newOperation === `/`) {
           changeOperation(newOperation);
