@@ -149,7 +149,9 @@ function Calculator() {
         }
       }
       if (value === `.`) {
-        changeOutput(output + `.`);
+        if (output.match(/^[^.\r\n]+$/)) {
+          changeOutput(output + `.`);
+        }
       } else {
         changeOutput((output + value));
       }
