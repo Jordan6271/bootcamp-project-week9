@@ -20,6 +20,10 @@ function Calculator() {
           alert(`You cannot divide by 0.`);
           changeInput(input.slice(0, -3));
           changeOutput(``);
+        } else if ((calculation === 0 && operation) === `*` || (calculation === 0 && operation === `/`)) {
+          changeOutput(`0`);
+          changeInput(``);
+          changeCalculation(0);
         } else {
           const sum = calculateSum();
           if ((sum + '.').split('.')[1].length > 3) { 
@@ -68,30 +72,34 @@ function Calculator() {
 
   const calculateSum = () => {
     const number = parseFloat(output);
-    if (calculation === 0) {
-      return (number);
-    } else {
-      if (operation === `+`) {
-        return (calculation + number);
-      } else if (operation === `-`) {
-        return (calculation - number);
-      } else if (operation === `*`) {
+    if (operation === `+`) {
+      return (calculation + number);
+    } else if (operation === `-`) {
+      return (calculation - number);
+    } else if (operation === `*`) {
+      if (calculation === 0) {
+        return (0);
+      } else {
         return (calculation * number);
-      } else if (operation === `/`) {
-        return (calculation / number);
-      } else if (operation === `←` || operation === `!←` ) {
-        if (input.slice(-2, -1) === `+`) {
-          return (calculation + number);
-        } else if (input.slice(-2, -1) === `-`) {
-          return (calculation - number);
-        } else if (input.slice(-2, -1) === `*`) {
-          return (calculation * number);
-        } else if (input.slice(-2, -1) === `/`) {
-          return (calculation / number);
-        }
-      } else if (operation === `=`) {
-        return (calculation);
       }
+    } else if (operation === `/`) {
+      if (calculation === 0) {
+        return (0);
+      } else {
+        return (calculation / number);
+      }
+    } else if (operation === `←` || operation === `!←` ) {
+      if (input.slice(-2, -1) === `+`) {
+        return (calculation + number);
+      } else if (input.slice(-2, -1) === `-`) {
+        return (calculation - number);
+      } else if (input.slice(-2, -1) === `*`) {
+        return (calculation * number);
+      } else if (input.slice(-2, -1) === `/`) {
+        return (calculation / number);
+      }
+    } else if (operation === `=`) {
+      return (calculation);
     }
   }
 
@@ -106,8 +114,13 @@ function Calculator() {
         changeOperation(currentOperation);
       }
     } else {
-      const sum = calculateSum();
-      changeCalculation(sum);
+      if (calculation === 0) {
+        changeOperation(currentOperation);
+        changeCalculation(calculation + 0);
+      } else {
+        const sum = calculateSum();
+        changeCalculation(sum);
+      }
       changeOutput(``);
       changeOperation(currentOperation);
       if (output === `` && operation === `=`) {
